@@ -1,0 +1,32 @@
+s#!/bin/bash
+while true
+do
+    OPCION=$(zenity --list \
+        --title="Menú de Scripts" \
+        --text="Selecciona un script para ejecutar:" \
+        --column="Opción" --column="Descripción" \
+        1 "Generar claves" \
+        2 "Cifrado simétrico" \
+        3 "Cifrado asimétrico" \
+        4 "Gestión de claves publicas" \
+        5 "Salir" \
+        --width=400 --height=300)
+
+    case $OPCION in
+        1)
+            ./script1 ;;
+        2)
+            ./script2 ;;
+        3)
+            ./script3 ;;
+        4)
+            ./script4 ;;
+        5)
+            zenity --info --text="Saliendo del menú." --width=200
+            exit 0
+            ;;
+        *)
+            zenity --error --text="Opción no válida."
+            ;;
+    esac
+done

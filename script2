@@ -1,0 +1,42 @@
+#!/bin/bash
+opcion=$(zenity --list --title="Cifrado simétrico" --column="Opción" 1 "Generar clave random" 2 "Cifrar archivo" 3 "Descifrar archivo")
+
+case $opcion in
+    1)
+        nombre=$(zenity --entry --title="Nombre de clave" --text="Introduce un nombre para la clave (.bin)")
+        carpeta=$(zenity --file-selection --directory --title="Selecciona carpeta para guardar la clave")
+        if [[ -n "$nombre" && -n "$carpeta" ]]
+	then
+            openssl rand 32 > "$carpeta/$nombre.bin"
+            zenity --info --text="Clave simétrica generada correctamente:\n$carpeta/$nombre.bin"
+        else
+            zenity --error --text="Debes indicar un nombre y una carpeta"
+        fi
+        ;;
+    2)
+        archivo=$(zenity --file-selection --title="Archivo a cifrar")
+        clave=$(zenity --file-selection --title="Selecciona la clave .bin")
+        carpeta=$(zenity --file-selection --directory --title="Carpeta de salida")
+        nombre=$(zenity --entry --title="Nombre archivo cifrado" --text="Introduce nombre de salida")
+        if [[ -n "$archivo" && -n "$clave" && -n "$carpeta" && -n "$nombre" ]]
+	then
+            openssl enc -aes-256-cbc -pbkdf2 -salt -in "$archivo" -out "$carpeta/$nombre.enc" -K "$(xxd -p "$clave" | tr -d '\n')"
+            zenity --info --text="Archivo cifrado correctamente:\n$carpeta/$nombre.enc"
+        else
+            zenity --error --text="Faltan datos para cifrar"
+        fi
+        ;;
+    3)
+        archivo=$(zenity --file-selection --title="Archivo a descifrar")
+        clave=$(zenity --file-selection --title="Selecciona la clave .bin")
+        carpeta=$(zenity --file-selection --directory --title="Carpeta de salida")
+        nombre=$(zenity --entry --title="Nombre archivo descifrado" --text="Introduce nombre de salida")
+        if [[ -n "$archivo" && -n "$clave" && -n "$carpeta" && -n "$nombre" ]]
+	then
+            openssl enc -d -aes-256-cbc -pbkdf2 -in "$archivo" -out "$carpeta/$nombre" -K "$(xxd -p "$clave" | tr -d '\n')"
+            zenity --info --text="Archivo descifrado correctamente:\n$carpeta/$nombre"
+        else
+            zenity --error --text="Faltan datos para descifrar"
+        fi
+        ;;
+esac

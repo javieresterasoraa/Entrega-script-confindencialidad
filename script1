@@ -1,0 +1,22 @@
+#!/bin/bash
+
+opcion=$(zenity --list --title="Generar claves RSA" --column="Opción" 1 "2048" 2 "4096")
+case $opcion in
+    1) numero=2048;;
+    2) numero=4096;;
+    *) zenity --error --text="Número no válido"; exit 1;;
+esac
+
+nombre=$(zenity --entry --title="Nombre de clave" --text="Introduce un nombre para los archivos de las claves")
+carpeta=$(zenity --file-selection --directory --title="Selecciona la carpeta donde guardar las claves")
+
+if [[ -z "$nombre" || -z "$carpeta" ]]; then
+    zenity --error --text="Debes introducir un nombre y seleccionar una carpeta"
+    exit 1
+fi
+
+openssl genrsa -out "$carpeta/$nombre"_privada.pem "$numero"
+chmod 600 "$carpeta/$nombre"_privada.pem
+openssl rsa -in "$carpeta/$nombre"_privada.pem -pubout -out "$carpeta/$nombre"_publica.pem
+
+zenity --info --text="Claves generadas correctamente en:\n$carpeta"
