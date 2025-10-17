@@ -1,3 +1,4 @@
+!#/bin/bash
 keyring="./keyring"
 if [[ ! -d "$keyring" ]]
 then
