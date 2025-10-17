@@ -8,34 +8,34 @@ Esta aplicación permite gracias a openSSL y a zenity al ejecutarse tener una in
 - Zenity para los menús gráficos
 - Sistema Linux o WSL en Windows
 
-Estructura del proyecto
-----------------------
+### Estructura del proyecto
 
-Entrega-script-confindencialidad
+```
+Entrega-script-confindencialidad/
 │
-├─ Script       # Menú principal con Zenity
-├─ script1      # Generación de claves RSA
-├─ script2      # Cifrado y descifrado simétrico
-├─ script3      # Cifrado y descifrado híbrido (AES+RSA)
-├─ script4      # Gestión de claves públicas (ver, buscar, importar, exportar)
+├─ Script        # Menú principal con Zenity
+├─ script1       # Generación de claves RSA
+├─ script2       # Cifrado y descifrado simétrico
+├─ script3       # Cifrado y descifrado híbrido (AES+RSA)
+├─ script4       # Gestión de claves públicas (ver, buscar, importar, exportar)
 └─ README.md
-
+```
 ## Instalación
 
 
 1. Clonar el repositorio:
-
+```
 git clone https://github.com/javieresterasoraa/Entrega-script-confindencialidad.git
 cd ./Entrega-script-confindencialidad
-
+```
 2. Dar permisos de ejecución a los scripts:
-
+```
 chmod +x *.sh
-
+```
 3. Ejecutar el menú principal:
-
+```
 ./Script
-
+```
 ## Menú
 Al ejecutar menu.sh, se muestra un menú gráfico con las siguientes opciones:
 
