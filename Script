@@ -1,4 +1,4 @@
-s#!/bin/bash
+#!/bin/bash
 while true
 do
     OPCION=$(zenity --list \
